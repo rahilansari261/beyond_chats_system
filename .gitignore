@@ -1,0 +1,6 @@
+/ai-service/.env
+/ai-service/node_modules
+/backend/node_modules
+/frontend/.env  
+/frontend/node_modules
+/frontend/.next 
