@@ -69,7 +69,6 @@ touch .env
 Add the following keys to `.env`:
 ```env
 PORT=5001
-GEMINI_API_KEY=your_gemini_key
 GROQ_API_KEY=your_groq_key
 SERPAPI_KEY=your_serpapi_key
 ```
