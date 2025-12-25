@@ -74,7 +74,7 @@ class ArticleController extends Controller
             $client = new \GuzzleHttp\Client();
             
             // 1. Get Main Page to find Last Page number
-            $response = $client->get('https://beyondchats.com/blogs/');
+            $response = $client->get(config('services.scraping.url'));
             $html = (string) $response->getBody();
             $crawler = new \Symfony\Component\DomCrawler\Crawler($html);
             
@@ -98,7 +98,8 @@ class ArticleController extends Controller
             // Loop until we have 5 articles or run out of pages
             while ($articlesCount < 5 && $currentPage >= 1) {
                 
-                $targetUrl = "https://beyondchats.com/blogs/page/{$currentPage}/";
+                $baseUrl = rtrim(config('services.scraping.url'), '/');
+                $targetUrl = "{$baseUrl}/page/{$currentPage}/";
                 try {
                     $response = $client->get($targetUrl);
                 } catch (\Exception $e) {

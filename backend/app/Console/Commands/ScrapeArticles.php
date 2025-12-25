@@ -29,7 +29,7 @@ class ScrapeArticles extends Command
         $this->info("Fetching blog pagination...");
         
         // 1. Get max page
-        $crawler = new \Symfony\Component\DomCrawler\Crawler((string)$client->get('https://beyondchats.com/blogs/')->getBody());
+        $crawler = new \Symfony\Component\DomCrawler\Crawler((string)$client->get(config('services.scraping.url'))->getBody());
         // Pagination locator: commonly .page-numbers or similar.
         // Based on inspection, it's typically a list of numbers. 
         // Let's assume standard WP/Elementor pagination.
@@ -55,7 +55,8 @@ class ScrapeArticles extends Command
             if (count($articlesToProcess) >= 5) break;
             
             $this->info("Scraping page $page...");
-            $url = "https://beyondchats.com/blogs/page/$page/";
+            $baseUrl = rtrim(config('services.scraping.url'), '/');
+            $url = "{$baseUrl}/page/$page/";
             try {
                 $response = $client->get($url);
             } catch (\Exception $e) {

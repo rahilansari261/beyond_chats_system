@@ -92,7 +92,7 @@ export default function Home() {
     const handleScrape = async () => {
         setIsScraping(true);
         try {
-            await axios.post('http://127.0.0.1:8000/api/scrape-beyondchats');
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/scrape-beyondchats`);
             // Wait a bit or re-fetch
             await fetchArticles();
         } catch (e) {
@@ -106,7 +106,7 @@ export default function Home() {
     const handleEnhance = async () => {
         setIsEnhancing(true);
         try {
-            await axios.post('http://localhost:5001/enhance');
+            await axios.post(`${process.env.NEXT_PUBLIC_AI_SERVICE_URL}/enhance`);
             await fetchArticles();
         } catch (e) {
             console.error(e);
@@ -120,7 +120,7 @@ export default function Home() {
         if (!confirm("Are you sure you want to delete all articles?")) return;
         setIsResetting(true);
         try {
-            await axios.post('http://127.0.0.1:8000/api/reset-db');
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/reset-db`);
             await fetchArticles();
         } catch (e) {
             console.error(e);

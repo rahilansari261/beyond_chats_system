@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
-const LARAVEL_API = 'http://127.0.0.1:8000/api/articles';
+const LARAVEL_API = process.env.LARAVEL_API_URL || 'http://127.0.0.1:8000/api/articles';
 
 // Provider Setup
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
@@ -74,7 +74,7 @@ async function searchGoogle(query) {
 
     try {
         console.log("Searching Google via SerpApi...");
-        const response = await axios.get('https://serpapi.com/search.json', {
+        const response = await axios.get(process.env.SERPAPI_URL || 'https://serpapi.com/search.json', {
             params: {
                 engine: "google",
                 q: query,
@@ -84,7 +84,7 @@ async function searchGoogle(query) {
         });
 
         const results = response.data.organic_results || [];
-        const links = results.map(r => r.link).filter(l => l);
+        const links = results.map(r => r.link).filter(l => l && !l.toLowerCase().includes('beyondchats.com') && !l.toLowerCase().includes('amazon.'));
 
         return links;
     } catch (e) {

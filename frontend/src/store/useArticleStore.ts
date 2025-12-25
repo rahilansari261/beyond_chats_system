@@ -30,7 +30,7 @@ export const useArticleStore = create<ArticleStore>((set) => ({
             // Assuming Laravel runs on 8000, need CORS or Proxy.
             // For dev, can point direct if CORS enabled, or proxy in next.config.
             // I'll point direct for now, assuming api is CORS friendly (Laravel 11 default usually open for all in dev).
-            const response = await axios.get('http://127.0.0.1:8000/api/articles');
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/articles`);
             set({ articles: response.data.data, loading: false });
         } catch (err: any) {
             set({ error: err.message, loading: false });
@@ -40,7 +40,7 @@ export const useArticleStore = create<ArticleStore>((set) => ({
     fetchArticle: async (id: number) => {
         set({ loading: true, error: null });
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/articles/${id}`);
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/articles/${id}`);
             set({ loading: false });
             return response.data;
         } catch (err: any) {

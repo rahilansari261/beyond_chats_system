@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'scraping' => [
+        'url' => env('SCRAPING_SOURCE_URL', 'https://beyondchats.com/blogs/'),
+    ],
+
 ];
